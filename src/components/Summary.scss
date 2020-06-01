@@ -1,0 +1,62 @@
+$margin: 10px;
+$min-item-width: 145px;
+$max-item-width: 200px;
+$max-supported-items: 7;
+
+.summary {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 $margin $margin;
+
+    @supports (display: grid) {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax($min-item-width, 1fr));
+
+        @for $i from 2 through $max-supported-items {
+            &--#{$i}-items {
+                max-width: $max-item-width * $i;
+            }
+        }
+    }
+}
+
+.summary__item {
+    flex: 0 0 auto;
+    outline: 1px solid green;
+
+    padding: $margin $margin 0;
+    box-sizing: border-box;
+
+    min-width: $min-item-width;
+    max-width: $max-item-width;
+
+    @for $i from 2 through $max-supported-items {
+        .summary--#{$i}-items & {
+            width: (100% / $i);
+        }
+    }
+
+    @supports (display: grid) {
+        max-width: unset;
+        @for $i from 2 through $max-supported-items {
+            .summary--#{$i}-items & {
+                width: unset;
+            }
+        }
+    }
+}
+
+.summary__item-label {
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.summary__item-value {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
