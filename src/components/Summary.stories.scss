@@ -1,0 +1,8 @@
+.summary-template {
+    outline: 1px dashed black;
+    &--with-outlines {
+        * {
+            outline: 1px solid green;
+        }
+    }
+}
